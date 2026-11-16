@@ -1,29 +1,20 @@
 /**
- * Sumber data katalog motor.
- *
- * Sesuai SPEC.md: 8 motor seed, field `id`, `nama`, `kategori`, `cc`,
- * `harga`, `stok`, `deskripsi`, `imageUrl`, dan `unggulan`.
- * `imageUrl` memakai placeholder lokal (`local:<emoji>`), bukan foto unit.
+ * Data dan konfigurasi LintasRoda.
+ * Prototipe menyimpan ikon pada `icon` (🛵/🏍️) dan foto unggahan pada `foto`;
+ * konvensi itu dipertahankan agar data lama di localStorage tetap terbaca.
  */
 
 export const STORAGE_KEY = 'lintasroda_motor_v1';
+export const USERS_KEY = 'lintasroda_users_v1';
+export const ORDERS_KEY = 'lintasroda_orders_v1';
+export const SESSION_KEY = 'lintasroda_session_v1';
 
-/** @typedef {'Matic' | 'Bebek' | 'Sport' | 'Trail'} Kategori */
+// Ganti dengan nomor WhatsApp rental: kode negara + nomor, tanpa +, spasi, atau tanda baca.
+export const WHATSAPP_NUMBER = '6289676678530';
 
-/**
- * @typedef {object} Motor
- * @property {string} id
- * @property {string} nama
- * @property {Kategori} kategori
- * @property {number} cc
- * @property {number} harga
- * @property {number} stok
- * @property {string} deskripsi
- * @property {string} imageUrl
- * @property {boolean} unggulan
- */
+export const ROLE = { admin: 'Admin', seller: 'Penjual', buyer: 'Pembeli' };
+export const STATUS = ['Menunggu', 'Dikonfirmasi', 'Selesai', 'Dibatalkan'];
 
-/** @type {Motor[]} */
 export const SEED_MOTORS = [
   {
     id: 'mt-001',
@@ -33,7 +24,7 @@ export const SEED_MOTORS = [
     harga: 120000,
     stok: 6,
     deskripsi: 'Matic irit dan nyaman untuk keliling kota, bagasi luas.',
-    imageUrl: 'local:🛵',
+    icon: '🛵',
     unggulan: true,
   },
   {
@@ -43,8 +34,8 @@ export const SEED_MOTORS = [
     cc: 155,
     harga: 180000,
     stok: 3,
-    deskripsi: 'Matic bongsor dengan posisi duduk tegak, enak untuk perjalanan jauh.',
-    imageUrl: 'local:🛵',
+    deskripsi: 'Matic bongsor dengan jok empuk, cocok untuk perjalanan jauh.',
+    icon: '🛵',
     unggulan: true,
   },
   {
@@ -54,8 +45,8 @@ export const SEED_MOTORS = [
     cc: 110,
     harga: 90000,
     stok: 8,
-    deskripsi: 'Ringan dan lincah, cocok untuk jalan pendek di dalam kota.',
-    imageUrl: 'local:🛵',
+    deskripsi: 'Ringan dan lincah, pas untuk pemula dan boncengan singkat.',
+    icon: '🛵',
     unggulan: false,
   },
   {
@@ -65,8 +56,8 @@ export const SEED_MOTORS = [
     cc: 125,
     harga: 75000,
     stok: 5,
-    deskripsi: 'Bebek bandel dan hemat bahan bakar untuk pemakaian harian.',
-    imageUrl: 'local:🛵',
+    deskripsi: 'Bebek tangguh dan hemat bensin untuk pemakaian harian.',
+    icon: '🏍️',
     unggulan: false,
   },
   {
@@ -76,8 +67,8 @@ export const SEED_MOTORS = [
     cc: 150,
     harga: 200000,
     stok: 2,
-    deskripsi: 'Trail ringan untuk medan berbatu dan jalur pegunungan.',
-    imageUrl: 'local:🏍️',
+    deskripsi: 'Trail ringan untuk jalan berbatu dan tanjakan.',
+    icon: '🏍️',
     unggulan: true,
   },
   {
@@ -87,8 +78,8 @@ export const SEED_MOTORS = [
     cc: 150,
     harga: 220000,
     stok: 1,
-    deskripsi: 'Trail tangguh dengan suspensi tinggi untuk jalur tanah.',
-    imageUrl: 'local:🏍️',
+    deskripsi: 'Suspensi panjang, siap menjelajah jalur pegunungan.',
+    icon: '🏍️',
     unggulan: false,
   },
   {
@@ -98,8 +89,8 @@ export const SEED_MOTORS = [
     cc: 155,
     harga: 250000,
     stok: 2,
-    deskripsi: 'Sport fairing ringkas dengan posisi berkendara agresif.',
-    imageUrl: 'local:🏍️',
+    deskripsi: 'Sport fairing bertenaga dengan posisi berkendara agresif.',
+    icon: '🏍️',
     unggulan: false,
   },
   {
@@ -109,11 +100,32 @@ export const SEED_MOTORS = [
     cc: 250,
     harga: 400000,
     stok: 0,
-    deskripsi: 'Sport dua silinder untuk pengendara berpengalaman.',
-    imageUrl: 'local:🏍️',
+    deskripsi: 'Sport dua silinder untuk touring jarak jauh. Sedang disewa penuh.',
+    icon: '🏍️',
     unggulan: false,
   },
 ];
 
-/** Daftar jenis unik, dipakai untuk chip filter pada milestone berikutnya. */
-export const KATEGORI = [...new Set(SEED_MOTORS.map((motor) => motor.kategori))];
+export const SEED_USERS = [
+  {
+    id: 'usr-admin',
+    nama: 'Admin LintasRoda',
+    email: 'admin@lintasroda.id',
+    sandi: 'admin123',
+    role: 'admin',
+  },
+  {
+    id: 'usr-seller',
+    nama: 'Toko Motor Jaya',
+    email: 'penjual@lintasroda.id',
+    sandi: 'penjual123',
+    role: 'seller',
+  },
+  {
+    id: 'usr-buyer',
+    nama: 'Budi Pembeli',
+    email: 'pembeli@lintasroda.id',
+    sandi: 'pembeli123',
+    role: 'buyer',
+  },
+];
